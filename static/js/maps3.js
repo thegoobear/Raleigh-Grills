@@ -16,12 +16,12 @@ function Address(address, map, marker){
   self.removemarker = function(){
     self.infowindow.close(map, self.marker);
     self.marker.setMap(null);
-  }
+  };
 
   //set grill's marker to visible
   self.addmarker = function(){
     self.marker.setMap(self.map);
-  }
+  };
 
   //funtion to handle actions when a list item or marker is clicked
   self.bouncetoggle = function(address){
@@ -31,10 +31,10 @@ function Address(address, map, marker){
           self.infowindow.close(map, address.marker);
         } else {
           //if a marker is not active, deactiate all makers first
-          for (x in MyAppViewModel.addresslist()){
+          for (var x in MyAppViewModel.addresslist()){
           MyAppViewModel.addresslist()[x].marker.setAnimation(null);
           MyAppViewModel.addresslist()[x].infowindow.close(
-            map, MyAppViewModel.addresslist()[x].marker )
+            map, MyAppViewModel.addresslist()[x].marker );
           }
           //Turn on animation and open infowindow
           address.marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -44,26 +44,26 @@ function Address(address, map, marker){
           //make Ajax call to the Yelp Search API for the grill clicked
           $.ajax({
             //API url with query including name, lat+lng, etc
-            url: "https://api.yelp.com/v3/businesses/search?term="
-            + address.address() + "&latitude=" + address.marker.position.lat()
-            + "&longitude=" + address.marker.position.lng(),
+            url: "https://api.yelp.com/v3/businesses/search?term=" +
+            address.address() + "&latitude=" + address.marker.position.lat() +
+            "&longitude=" + address.marker.position.lng(),
             type: "GET",
-            headers: {"Authorization" : "Bearer fJmX3reVjBP-1iJgVGuh9-VMWVViG3O"
-            + "sqF12q-Tq7Ech2hl-D-jnAucboAzoY7vZXG4-M69ACbVVgg6PLYInXjLj7_zI6Fy"
-            + "MouzXy7TGEOQNlwbesm0Fjhp3WAZkWnYx"},
+            headers: {"Authorization" : "Bearer fJmX3reVjBP-1iJgVGuh9-VMWVViG" +
+            "3OsqF12q-Tq7Ech2hl-D-jnAucboAzoY7vZXG4-M69ACbVVgg6PLYInXjLj7_zI6" +
+            "FyMouzXy7TGEOQNlwbesm0Fjhp3WAZkWnYx"},
             //populate infowindow with API response
             success: function(response) { self.infowindow.setContent(
-            "<img src='static/img/yelplogo.png' style='height:50px;'><br>Name: "
-            + response.businesses[0].name + "<br>Rating: "
-            + response.businesses[0].rating.toString() + '<br>Price: '
-            + response.businesses[0].price);
+            "<img src='static/img/yelplogo.png' style='height:50px;'>" +
+            "<br>Name: " + response.businesses[0].name + "<br>Rating: " +
+            response.businesses[0].rating.toString() + '<br>Price: ' +
+            response.businesses[0].price);
             },
             error: function (){
-              self.infowindow.setContent('Oops, Yelp isn\'t responding')}
+              self.infowindow.setContent('Oops, Yelp isn\'t responding');}
           });
 
         }
-  }
+  };
 }
 
 function AppViewModel(map, addresslist){
