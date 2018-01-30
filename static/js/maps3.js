@@ -130,7 +130,7 @@ function initMap() {
   var addresses = ['Winston\'s Grille', 'Watkins', 'Chargrill North',
   'Chuck\'s', 'Big Ed\'s North'];
 
-  for (x in addresses){
+  for (var x in addresses){
     setupmap(x);
   }
 
