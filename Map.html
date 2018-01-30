@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+
+<title>Map Project</title>
+
+<meta charset='utf-8'>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A map for searching out cool things near you">
+<meta name="keywords" content="map, neighborhood, udacity">
+
+<link rel='stylesheet' type='text/css' href='static/css/map.css'>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" rel="stylesheet">
+
+<script type='text/javascript' src='static/js/knockout-3.4.2.js'></script>
+<script type='text/javascript' src='static/js/knockout.mapping-latest.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+<main>
+  <div id='sidebar'>
+
+    <h2 data-bind="text: selectlocation"></h2><br>
+
+    <input class='searchbox' data-bind='textInput: searchterms'>
+
+    <ul data-bind="foreach: addresslist">
+    <li data-bind="click: $data.bouncetoggle">
+        <b data-bind="text: address"></b>
+    </li>
+    </ul>
+
+  </div>
+
+  <div id='mapbox'>
+    <div class="topbar"><img src='static/img/menu.png' onclick="togglesidebar()"></div>
+    <div id="map"></div>
+  </div>
+</main>
+
+<script type='text/javascript' src='static/js/maps3.js'></script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM9XCy6KuDUa32gxkLd7FPUOwf3ljbgQ4&callback=initMap">
+</script>
+
+</body>
