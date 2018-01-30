@@ -2,6 +2,9 @@ function Address(address, map, marker){
   var self = this;
   self.address = ko.observable(address);
   self.marker = marker;
+  self.marker.addListener('click', function() {
+          self.bouncetoggle(self);
+        });
   self.map = map;
   self.infowindow = new google.maps.InfoWindow({
     content: 'Loading...'
@@ -69,7 +72,6 @@ function AppViewModel(map, addresslist){
 
     for (var x in self.addresslistcopy){
       self.addresslistcopy[x].removemarker();
-      //console.log(addresslist[x].address)
       if(self.addresslistcopy[x].address().toLowerCase().indexOf(
         filter.toLowerCase()) >= 0) {
         self.addresslist.push(self.addresslistcopy[x]);
@@ -100,7 +102,6 @@ else {
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'));
   var topbar = document.getElementById('sidebar');
-  //var markers = [];
   var addresslist = [];
   var counter = 0;
   var geocoder = new google.maps.Geocoder();
@@ -109,7 +110,6 @@ function initMap() {
 
   for (x in addresses){
     setupmap(x);
-    //console.log(addresslist);
   }
 
   function setupmap(val){
@@ -126,11 +126,10 @@ function initMap() {
               position: results[0].geometry.location
           });
 
-          console.log(results[0].geometry.location.lat());
-
           var address = new Address(addresses[val], map, marker);
 
           addresslist.push(address);
+
           if (addresslist.length==addresses.length){
             MyAppViewModel = new AppViewModel(map, addresslist);
             ko.applyBindings(MyAppViewModel);
