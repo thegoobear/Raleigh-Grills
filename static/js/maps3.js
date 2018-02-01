@@ -1,3 +1,9 @@
+
+$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCM9XCy6KuDUa32gxkLd7FPUOwf3ljbgQ4&callback=initMap")
+  .fail(function(){
+    alert('Google Maps API unreachable');
+  });
+
 //An address object representing a grill in the list
 function Address(address, map, marker){
   var self = this;
@@ -123,6 +129,12 @@ else {
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'));
+
+  map.onerror = function (){
+    console.log('poo');
+    alert('Error: ' + status);
+  }
+
   var addresslist = [];
   var counter = 0;
   //Geocoder for getting lat and longitude from grill name/location
