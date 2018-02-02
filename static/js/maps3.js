@@ -1,5 +1,6 @@
 
-$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCM9XCy6KuDUa32gxkLd7FPUOwf3ljbgQ4&callback=initMap")
+$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCM9XCy6KuDUa32g"+
+"xkLd7FPUOwf3ljbgQ4&callback=initMap")
   .fail(function(){
     alert('Google Maps API unreachable');
   });
