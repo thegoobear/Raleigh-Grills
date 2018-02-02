@@ -31,6 +31,8 @@ function Address(address, map, marker){
 
   //funtion to handle actions when a list item or marker is clicked
   self.bouncetoggle = function(address){
+    client_id="J0BUQ00QOO3ZEPTF1DCDPIEMZVXLEEATWPANTGXH322NPKJA";
+    client_secret="UVBNZXPVPTHS5A2EJVKEUZX4MWOSIZYGF1BAFS3IBKRJ33AB";
     //if a marker is already active, stop animation and close the infowindow
     if (address.marker.getAnimation() !== null) {
           address.marker.setAnimation(null);
@@ -50,22 +52,26 @@ function Address(address, map, marker){
           //make Ajax call to the Yelp Search API for the grill clicked
           $.ajax({
             //API url with query including name, lat+lng, etc
-            url: "https://api.yelp.com/v3/businesses/search?term=" +
-            address.address() + "&latitude=" + address.marker.position.lat() +
-            "&longitude=" + address.marker.position.lng(),
+            url: "https://api.foursquare.com/v2/venues/search",
             type: "GET",
-            headers: {"Authorization" : "Bearer fJmX3reVjBP-1iJgVGuh9-VMWVViG" +
-            "3OsqF12q-Tq7Ech2hl-D-jnAucboAzoY7vZXG4-M69ACbVVgg6PLYInXjLj7_zI6" +
-            "FyMouzXy7TGEOQNlwbesm0Fjhp3WAZkWnYx"},
+            async: true,
+            datatype: 'json',
+            data: "client_id=" + client_id + "&client_secret=" + client_secret +
+            "&ll=" + address.marker.position.lat() + "," +
+            address.marker.position.lng() + "&intent=match&limit=1&name=" +
+            address.address() + "&v=20180201",
             //populate infowindow with API response
-            success: function(response) { self.infowindow.setContent(
-            "<img src='static/img/yelplogo.png' style='height:50px;'>" +
-            "<br>Name: " + response.businesses[0].name + "<br>Rating: " +
-            response.businesses[0].rating.toString() + '<br>Price: ' +
-            response.businesses[0].price);
+            success: function(data) {
+            self.infowindow.setContent(
+            "<img src='static/img/foursquare.png' style='height:70px;'>" +
+            "<br>Name: " + data.response.venues[0].name + "<br>Address: " +
+            data.response.venues[0].location.address + '<br>Phone: ' +
+            data.response.venues[0].contact.formattedPhone +
+            '<br><br><a href=\'' + data.response.venues[0].menu.url + '\'>Menu</a>');
+
             },
             error: function (){
-              self.infowindow.setContent('Oops, Yelp isn\'t responding');}
+              self.infowindow.setContent('Oops, FourSquare isn\'t responding');}
           });
 
         }
@@ -134,7 +140,7 @@ function initMap() {
   var counter = 0;
   //Geocoder for getting lat and longitude from grill name/location
   var geocoder = new google.maps.Geocoder();
-  var addresses = ['Winston\'s Grille', 'Watkins', 'Chargrill North',
+  var addresses = ['Winston\'s Grille', 'Watkins', 'Char-Grill North',
   'Chuck\'s', 'Big Ed\'s North'];
 
   for (var x in addresses){
