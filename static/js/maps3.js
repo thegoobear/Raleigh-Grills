@@ -67,7 +67,8 @@ function Address(address, map, marker){
             "<br>Name: " + data.response.venues[0].name + "<br>Address: " +
             data.response.venues[0].location.address + '<br>Phone: ' +
             data.response.venues[0].contact.formattedPhone +
-            '<br><br><a href=\'' + data.response.venues[0].menu.url + '\'>Menu</a>');
+            '<br><br><a href=\'' + data.response.venues[0].menu.url +
+             '\'>Menu</a>');
 
             },
             error: function (){
