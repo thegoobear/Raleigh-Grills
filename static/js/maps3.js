@@ -33,7 +33,7 @@ function Address(address, map, marker){
   //funtion to handle actions when a list item or marker is clicked
   self.bouncetoggle = function(address){
     client_id="J0BUQ00QOO3ZEPTF1DCDPIEMZVXLEEATWPANTGXH322NPKJA";
-    client_secret="UVBNZXPVPTHS5A2EJVKEUZX4MWOSIZYGF1BAFS3IBKRJ33AB";
+    client_secret=<PUT YOUR API KEY HERE>;
     //if a marker is already active, stop animation and close the infowindow
     if (address.marker.getAnimation() !== null) {
           address.marker.setAnimation(null);
